@@ -100,8 +100,7 @@ const showDetails=(id)=>{
       const newsUrl=`https://openapi.programming-hero.com/api/news/${id}`
       const res=await fetch(newsUrl);
     const news=await res.json();
-    const newsData=(news.data[0]); 
-    console.log(newsData) ;   
+    const newsData=(news.data[0]);   
     const {title,details,author,rating}=newsData;
     const modalBox=document.getElementById('modal-box');
     modalBox.innerHTML='';
@@ -117,7 +116,7 @@ const showDetails=(id)=>{
             <p>Rating:${rating.number}</p>
             </div>
             <div class="modal-action">
-                <label for="my-modal-6" class="btn">Ok</label>
+                <label for="my-modal-6" class="btn bg-secondary">Ok</label>
               </div>
     `
     modalBox.appendChild(modalDiv);
