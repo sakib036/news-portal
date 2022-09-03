@@ -101,19 +101,20 @@ const showDetails=(id)=>{
       const res=await fetch(newsUrl);
     const news=await res.json();
     const newsData=(news.data[0]);   
-    const {title,details,author,rating}=newsData;
+    const {title,details,author,rating,total_view}=newsData;
     const modalBox=document.getElementById('modal-box');
     modalBox.innerHTML='';
     const modalDiv=document.createElement('div');
     modalDiv.innerHTML=`
     <h3 class="font-bold text-lg">${title}</h3>
             <p class="py-4">${details}</p>
-            <div class="flex">
+            <div class="flex justify-evenly">
             <div class="w-12 h-12  rounded-full border-2 border-rose-600 overflow-hidden" >
             <img src="${author.img}" alt="">
             </div>
             <p class="mx-2">${author.name? author.name:"Author Not Found"}</P>
             <p>Rating:${rating.number}</p>
+            <div><i class="fa-solid fa-eye">  </i>${total_view? total_view:"No View Found"}</div>
             </div>
             <div class="modal-action">
                 <label for="my-modal-6" class="btn bg-secondary">Ok</label>
