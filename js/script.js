@@ -6,12 +6,12 @@ const menuList =async () =>{
     
     return (data.data.news_category);
 }
+
 const displayMenuList= async() =>{
     const menuItems=await menuList();
     const menuSection=document.getElementById('menu-section');
     
     menuItems.forEach(menu => {
-        // console.log(menu);
         const menuLi=document.createElement('li');
         menuLi.innerHTML=`<a onclick="menuId('${menu.category_id}','${menu.category_name}')">${menu.category_name}</a>`;
         menuSection.appendChild(menuLi);
@@ -20,7 +20,6 @@ const displayMenuList= async() =>{
 
 }
 const menuId=(id, categoryName)=>{
-    // console.log(id)
     const spinner = document.getElementById("spinner");
     spinner.classList.remove("hidden");
     const categoryItem=async()=>{
