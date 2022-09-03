@@ -38,8 +38,13 @@ const menuId=(id, categoryName)=>{
     
     const categoryP=document.createElement('p');
     categoryFound.classList.remove('hidden');
+   
+    
     categoryP.innerText=`${datas.length? datas.length:"No"} items Found for category of ${name}`
     categoryFound.appendChild(categoryP)
+    if(datas.length===0){
+      spinner.classList.add("hidden");
+    }
     const valus=datas.sort((a, b) => b.total_view - a.total_view);
     valus.forEach(data=>{
         const{image_url,title,details,author,rating,total_view}=data;
@@ -70,7 +75,7 @@ const menuId=(id, categoryName)=>{
       </div>
         `
         cardSection.appendChild(cardDiv);
-        spinner.classList.add("hidden");
+        spinner.classList.add("hidden")
         // console.log(data);
     })
    };
