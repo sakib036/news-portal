@@ -66,7 +66,7 @@ const menuId=(id, categoryName)=>{
                  <p>${author.published_date?author.published_date.slice(0,11):"No Date"}</P>
 
                </div>
-               <div>${total_view? total_view:00}</div>
+               <div><i class="fa-solid fa-eye"></i>${total_view? total_view:00}</div>
                <div>
                <label for="my-modal-6" class="btn modal-button" onclick="showDetails('${title}','${details? details:"No Data Found"}','${author.name?author.name:"No author Found"}')">open modal</label>
                </div>
