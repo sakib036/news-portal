@@ -3,6 +3,7 @@ const menuList =async () =>{
     const menuUrl=`https://openapi.programming-hero.com/api/news/categories`;
     const res=await fetch(menuUrl);
     const data=await res.json();
+    
     return (data.data.news_category);
 }
 const displayMenuList= async() =>{
@@ -40,7 +41,11 @@ const menuId=(id, categoryName)=>{
     const valus=datas.sort((a, b) => b.total_view - a.total_view);
     valus.forEach(data=>{
         const{image_url,title,details,author,rating,total_view}=data;
-       
+        try {
+          title;
+        } catch (error) {
+          console.error(error);
+        }
         const cardDiv=document.createElement('div');
         cardDiv.innerHTML=`
         <div class="card lg:card-side bg-base-100 shadow-xl my-4">
@@ -51,7 +56,7 @@ const menuId=(id, categoryName)=>{
                 <h2 class="card-title">${title? title:"NO Title Found"}</h2>
                 <p>${details.length > 200 ? details.slice(0,200) + '...' : details}</p>
                <div class="card-actions flex justify-evenly">
-               <div class="w-12 h-12  rounded-full z-10 border-2 border-rose-600 overflow-hidden  " >
+               <div class="w-12 h-12  rounded-full border-2 border-rose-600 overflow-hidden  " >
                <img class="" src="${author.img}" alt="">
                </div>
                <div>
@@ -60,7 +65,8 @@ const menuId=(id, categoryName)=>{
 
                </div>
                <div>${total_view? total_view:00}</div>
-                 <button class="btn btn-primary">Listen</button>
+               <div>
+               <label for="my-modal-6" class="btn modal-button" onclick="showDetails('${title}','${details}','${author.name}')">open modal</label>
                </div>
              </div>
       </div>
@@ -68,9 +74,19 @@ const menuId=(id, categoryName)=>{
         cardSection.appendChild(cardDiv);
         // console.log(data);
     })
-   }
-  ;
+   };
+ 
    categoryItem();
 }
-
 displayMenuList();
+
+const showDetails=(title,details,author)=>{
+const modalBox=document.getElementById('modal-box');
+modalBox.innerHTML=`
+<h3 class="font-bold text-lg">${title}</h3>
+<p class="py-4">${details}</p>
+<p>${author}</p>
+`
+ 
+  console.log(title);
+}
