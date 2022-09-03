@@ -8,55 +8,55 @@ const menuList =async () =>{
   }
     catch(error){
       alert(error);
-    }
-    
-   
+    } 
 }
-
+// manu list show 
 const displayMenuList= async() =>{
     const menuItems=await menuList();
+    // call menu section by Id 
     const menuSection=document.getElementById('menu-section');
-    
+    //One element separate in an array
     menuItems.forEach(menu => {
+      //create a li and dynamic data push
         const menuLi=document.createElement('li');
         menuLi.innerHTML=`<a onclick="menuId('${menu.category_id}','${menu.category_name}')">${menu.category_name}</a>`;
         menuSection.appendChild(menuLi);
     });
 }
+//manu function create
 const menuId=(id, categoryName)=>{
+  //call spinner and start spin when menu item data load
     const spinner = document.getElementById("spinner");
     spinner.classList.remove("hidden");
+    //category item data load by id
     const categoryItem=async()=>{
         try{
           const categoryUrl=`https://openapi.programming-hero.com/api/news/category/${id}`;
     const res=await fetch(categoryUrl);
     const categories=await res.json();
-    
     displayCatagory(categories.data,categoryName);
         }
         catch(error){
           alert(error);
         }
    }
+   //category items found and display
    const displayCatagory=(datas,name)=>{
     const categoryFound=document.getElementById('category-found');
     categoryFound.innerText='';
     const cardSection=document.getElementById('card-section');
     cardSection.innerHTML='';
-    
+    //create a p tag and get category items
     const categoryP=document.createElement('p');
     categoryFound.classList.remove('hidden');
-   
-    
     categoryP.innerText=`${datas.length? datas.length:"No"} items Found for category of ${name}`
     categoryFound.appendChild(categoryP)
     if(datas.length===0){
       spinner.classList.add("hidden");
     }
+    //sort the value by total view
     const valus=datas.sort((a, b) => b.total_view - a.total_view);
     valus.forEach(data=>{
-      // console.log(data);
-        try{
           const{image_url,title,details,author,rating,total_view,_id}=data;
         const cardDiv=document.createElement('div');
         cardDiv.innerHTML=`
@@ -78,18 +78,13 @@ const menuId=(id, categoryName)=>{
                </div>
                <div><i class="fa-solid fa-eye"></i>${total_view? total_view:00}</div>
                <div>
-               <label for="my-modal-6" class="btn modal-button" onclick="showDetails('${_id}')">open modal</label>
+               <label for="my-modal-6" class="btn modal-button bg-secondary" onclick="showDetails('${_id}')">Details</label>
                </div>
              </div>
       </div>
         `
         cardSection.appendChild(cardDiv);
         spinner.classList.add("hidden")
-        }
-        catch(error){
-          alert(error);
-        }
-        // console.log(data);
     })
    };
  
@@ -97,32 +92,40 @@ const menuId=(id, categoryName)=>{
 };
 
 displayMenuList();
+//modal section
 
 const showDetails=(id)=>{
-  // console.log(id);
    const modalNewsId=async()=>{
     try{
       const newsUrl=`https://openapi.programming-hero.com/api/news/${id}`
       const res=await fetch(newsUrl);
     const news=await res.json();
-    const newsData=(news.data[0]);
-    const {title,details,author}=newsData;
+    const newsData=(news.data[0]); 
+    console.log(newsData) ;   
+    const {title,details,author,rating}=newsData;
     const modalBox=document.getElementById('modal-box');
     modalBox.innerHTML='';
     const modalDiv=document.createElement('div');
     modalDiv.innerHTML=`
     <h3 class="font-bold text-lg">${title}</h3>
             <p class="py-4">${details}</p>
-            <p>${author.name? author.name:"Author Not Found"}</P>
+            <div class="flex">
+            <div class="w-12 h-12  rounded-full border-2 border-rose-600 overflow-hidden" >
+            <img src="${author.img}" alt="">
+            </div>
+            <p class="mx-2">${author.name? author.name:"Author Not Found"}</P>
+            <p>Rating:${rating.number}</p>
+            </div>
             <div class="modal-action">
-                <label for="my-modal-6" class="btn">Yay!</label>
+                <label for="my-modal-6" class="btn">Ok</label>
               </div>
     `
     modalBox.appendChild(modalDiv);
-        }
-        catch(error){
-          alert(error);
-        }
+  }
+  catch(error){
+    alert(error);
+  }
+       
    }
    modalNewsId();
 }
