@@ -48,7 +48,6 @@ const menuId=(id, categoryName)=>{
     const valus=datas.sort((a, b) => b.total_view - a.total_view);
     valus.forEach(data=>{
         const{image_url,title,details,author,rating,total_view}=data;
-      
         const cardDiv=document.createElement('div');
         cardDiv.innerHTML=`
         <div class="card lg:card-side bg-base-100 shadow-xl my-4">
@@ -69,14 +68,14 @@ const menuId=(id, categoryName)=>{
                </div>
                <div>${total_view? total_view:00}</div>
                <div>
-               <label for="my-modal-6" class="btn modal-button" onclick="showDetails('${title}','${details}','${author.name}')">open modal</label>
+               <label for="my-modal-6" class="btn modal-button" onclick="showDetails('${title}','${details? details:"No Data Found"}','${author.name?author.name:"No author Found"}')">open modal</label>
                </div>
              </div>
       </div>
         `
         cardSection.appendChild(cardDiv);
         spinner.classList.add("hidden")
-        // console.log(data);
+        console.log(data);
     })
    };
  
