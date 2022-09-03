@@ -21,6 +21,8 @@ const displayMenuList= async() =>{
 }
 const menuId=(id, categoryName)=>{
     // console.log(id)
+    const spinner = document.getElementById("spinner");
+    spinner.classList.remove("hidden");
     const categoryItem=async()=>{
         const categoryUrl=`https://openapi.programming-hero.com/api/news/category/${id}`;
     const res=await fetch(categoryUrl);
@@ -41,11 +43,7 @@ const menuId=(id, categoryName)=>{
     const valus=datas.sort((a, b) => b.total_view - a.total_view);
     valus.forEach(data=>{
         const{image_url,title,details,author,rating,total_view}=data;
-        try {
-          title;
-        } catch (error) {
-          console.error(error);
-        }
+      
         const cardDiv=document.createElement('div');
         cardDiv.innerHTML=`
         <div class="card lg:card-side bg-base-100 shadow-xl my-4">
@@ -72,6 +70,7 @@ const menuId=(id, categoryName)=>{
       </div>
         `
         cardSection.appendChild(cardDiv);
+        spinner.classList.add("hidden");
         // console.log(data);
     })
    };
